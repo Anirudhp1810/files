@@ -1,0 +1,1572 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OMISHA CLINIC - Comprehensive Test Reports</title>
+<style>
+/* =========================================================
+   CSS VARIABLES
+========================================================= */
+:root {
+    --primary: #2563eb;
+    --primary-dark: #1e40af;
+    --secondary: #64748b;
+    --success: #16a34a;
+    --danger: #dc2626;
+    --warning: #d97706;
+
+    --bg: #f1f5f9;
+    --dark: #0f172a;
+
+    --border-soft: #e2e8f0;
+    --border-strong: #cbd5e1;
+}
+
+/* =========================================================
+   RESET (GOOGLE SITES SAFE)
+========================================================= */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    background: transparent;
+    font-family: Inter, system-ui, sans-serif;
+    color: var(--dark);
+    font-size: 14px;
+    line-height: 1.55;
+}
+
+/* =========================================================
+   EMBED WRAPPER (REPLACES BODY STYLING)
+========================================================= */
+.embed-wrapper {
+    background: var(--bg);
+    padding: 24px;
+}
+
+/* =========================================================
+   MAIN CONTAINER (NO RADIUS)
+========================================================= */
+.container {
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    background: #ffffff;
+    border: 1px solid var(--border-strong);
+}
+
+/* =========================================================
+   HEADER (EDGE-TO-EDGE FIX FOR GOOGLE SITES)
+========================================================= */
+.header {
+    margin: -24px -24px 0 -24px;
+    padding: 26px 40px;
+    background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.meta {
+    font-size: 13px;
+    opacity: 0.9;
+}
+
+/* =========================================================
+   SUMMARY BAR
+========================================================= */
+.summary-bar {
+    display: flex;
+    gap: 20px;
+    padding: 18px 32px;
+    background: #ffffff;
+    border-bottom: 1px solid var(--border-strong);
+}
+
+.stat-card {
+    padding: 14px 18px;
+    background: #f8fafc;
+    border: 1px solid var(--border-soft);
+    border-radius: 10px;
+    min-width: 120px;
+}
+
+.stat-label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: var(--secondary);
+}
+
+.stat-value {
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.stat-value.pass {
+    color: var(--success);
+}
+
+/* =========================================================
+   CONTENT SECTIONS (NO RADIUS)
+========================================================= */
+.content {
+    padding: 32px 40px;
+}
+
+.section {
+    margin-bottom: 40px;
+    padding: 24px;
+    background: #ffffff;
+    border: 1px solid var(--border-strong);
+}
+
+/* =========================================================
+   SECTION TITLE
+========================================================= */
+.section-title {
+    margin: 0 0 20px 0;
+    padding: 12px 16px;
+    font-size: 17px;
+    font-weight: 800;
+    background: #f8fafc;
+    border: 1px solid var(--border-soft);
+    border-left: 5px solid var(--primary);
+}
+
+/* =========================================================
+   TABLE – FULL GRID (ROWS + COLUMNS)
+========================================================= */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+    border: 1px solid var(--border-strong);
+}
+
+thead th {
+    background: #f1f5f9;
+    padding: 14px 16px;
+    font-size: 12px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--secondary);
+    border: 1px solid var(--border-strong);
+    text-align: left;
+}
+
+tbody td {
+    padding: 14px 16px;
+    border: 1px solid var(--border-soft);
+    vertical-align: top;
+}
+
+tbody tr:nth-child(even) {
+    background: #fafafa;
+}
+
+tbody tr:hover {
+    background: #f0f9ff;
+}
+
+/* =========================================================
+   COLUMN WIDTHS
+========================================================= */
+.col-id { width: 80px; font-weight: 700; }
+.col-title { width: 160px; }
+.col-obj { width: 220px; }
+.col-pre { width: 160px; }
+.col-data { width: 160px; }
+.col-steps { width: 260px; }
+.col-result { width: 220px; }
+
+.col-prio,
+.col-type,
+.col-status {
+    width: 110px;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* =========================================================
+   BADGES
+========================================================= */
+.badge {
+    display: inline-block;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 700;
+    border-radius: 999px;
+    text-transform: uppercase;
+}
+
+.badge.pass {
+    background: #dcfce7;
+    color: #166534;
+}
+
+.badge.high {
+    background: #ffedd5;
+    color: #9a3412;
+}
+
+.badge.medium {
+    background: #dbeafe;
+    color: #1e40af;
+}
+
+.badge.critical {
+    background: #fee2e2;
+    color: #991b1b;
+}
+
+/* =========================================================
+   LISTS
+========================================================= */
+ol {
+    margin: 0;
+    padding-left: 18px;
+}
+
+ol li {
+    margin-bottom: 6px;
+}
+/* =========================================================
+   GOOGLE SITES – TABLE CUT FIX (CSS ONLY)
+========================================================= */
+
+/* Allow horizontal scrolling at section level */
+.section {
+    overflow-x: auto;
+}
+
+/* Prevent table from compressing columns */
+.section table {
+    min-width: 1300px; /* adjust if needed */
+}
+
+/* Smooth scrolling on touch devices */
+.section {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Optional: scrollbar visibility (desktop) */
+.section::-webkit-scrollbar {
+    height: 8px;
+}
+
+.section::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+}
+.section::-webkit-scrollbar-track {
+    background: #f1f5f9;
+}
+/* =========================================================
+   RESPONSIVE (EMBED SAFE)
+========================================================= */
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 22px 24px;
+    }
+
+    .content {
+        padding: 24px 20px;
+    }
+
+    .summary-bar {
+        flex-wrap: wrap;
+    }
+}
+</style>
+
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>OMISHA CLINIC - Test Verification Report</h1>
+            <div class="meta">Verified on: 03/01/2026</div>
+        </div>
+
+        <div class="summary-bar">
+            <div class="stat-card">
+                <div class="stat-label">Total Cases</div>
+                <div class="stat-value">61</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-label">Passed</div>
+                <div class="stat-value pass">61</div>
+            </div>
+        </div>
+
+        <!-- 1. AUTHENTICATION & SECURITY -->
+        <div class="section">
+            <h2 class="section-title">1. Authentication & Security</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-001 -->
+                    <tr>
+                        <td>TC-001</td>
+                        <td>Registration Name Split</td>
+                        <td>Verify system splits full name into username</td>
+                        <td>Public Reg Page</td>
+                        <td>First: Rahul<br>Last: Verma</td>
+                        <td>
+                            <ol>
+                                <li>Enter First Name</li>
+                                <li>Enter Last Name</li>
+                                <li>Submit</li>
+                            </ol>
+                        </td>
+                        <td>Success modal shows username (rahul_verma)</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-002 -->
+                    <tr>
+                        <td>TC-002</td>
+                        <td>Duplicate Username</td>
+                        <td>Verify error for existing username</td>
+                        <td>Public Reg Page</td>
+                        <td>Existing User</td>
+                        <td>
+                            <ol>
+                                <li>Register with same name</li>
+                            </ol>
+                        </td>
+                        <td>Error: "User already exists"</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-003 -->
+                    <tr>
+                        <td>TC-003</td>
+                        <td>Mandatory Fields</td>
+                        <td>Verify Blood Group is mandatory</td>
+                        <td>Public Reg Page</td>
+                        <td>Empty Blood Group</td>
+                        <td>
+                            <ol>
+                                <li>Leave Blood Group blank</li>
+                                <li>Submit</li>
+                            </ol>
+                        </td>
+                        <td>Submit disabled or Error toast</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-004 -->
+                    <tr>
+                        <td>TC-004</td>
+                        <td>Security Question</td>
+                        <td>Verify SQ input is mandatory</td>
+                        <td>Public Reg Page</td>
+                        <td>Empty SQ Answer</td>
+                        <td>
+                            <ol>
+                                <li>Leave SQ blank</li>
+                                <li>Submit</li>
+                            </ol>
+                        </td>
+                        <td>Submit disabled</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-005 -->
+                    <tr>
+                        <td>TC-005</td>
+                        <td>Password Mismatch</td>
+                        <td>Verify password confirmation logic</td>
+                        <td>Public Reg Page</td>
+                        <td>Pwd: 123, Conf: 124</td>
+                        <td>
+                            <ol>
+                                <li>Enter mismatched passwords</li>
+                                <li>Submit</li>
+                            </ol>
+                        </td>
+                        <td>Error: "Passwords do not match"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-006 -->
+                    <tr>
+                        <td>TC-006</td>
+                        <td>Login (Mobile)</td>
+                        <td>Verify login with Mobile number</td>
+                        <td>Login Page</td>
+                        <td>Valid Mobile</td>
+                        <td>
+                            <ol>
+                                <li>Enter Mobile</li>
+                                <li>Enter Password</li>
+                                <li>Login</li>
+                            </ol>
+                        </td>
+                        <td>Redirect to Dashboard</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-007 -->
+                    <tr>
+                        <td>TC-007</td>
+                        <td>Login (Username)</td>
+                        <td>Verify login with Username</td>
+                        <td>Login Page</td>
+                        <td>Valid Username</td>
+                        <td>
+                            <ol>
+                                <li>Enter Username</li>
+                                <li>Enter Password</li>
+                                <li>Login</li>
+                            </ol>
+                        </td>
+                        <td>Redirect to Dashboard</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-008 -->
+                    <tr>
+                        <td>TC-008</td>
+                        <td>Invalid Credentials</td>
+                        <td>Verify login rejection for wrong password</td>
+                        <td>Login Page</td>
+                        <td>Wrong Password</td>
+                        <td>
+                            <ol>
+                                <li>Enter valid user</li>
+                                <li>Enter wrong pwd</li>
+                            </ol>
+                        </td>
+                        <td>Error: "Invalid credentials"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-009 -->
+                    <tr>
+                        <td>TC-009</td>
+                        <td>Non-existent User</td>
+                        <td>Verify login rejection for unknown user</td>
+                        <td>Login Page</td>
+                        <td>Random User</td>
+                        <td>
+                            <ol>
+                                <li>Enter unknown user</li>
+                            </ol>
+                        </td>
+                        <td>Error: "User not found"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-010 -->
+                    <tr>
+                        <td>TC-010</td>
+                        <td>Forgot Password</td>
+                        <td>Verify Account Lookup</td>
+                        <td>Forgot Pwd Page</td>
+                        <td>Valid Mobile</td>
+                        <td>
+                            <ol>
+                                <li>Enter Mobile</li>
+                                <li>Search</li>
+                            </ol>
+                        </td>
+                        <td>Security Question displayed</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-011 -->
+                    <tr>
+                        <td>TC-011</td>
+                        <td>Case Insensitivity</td>
+                        <td>Verify username case handling</td>
+                        <td>Login Page</td>
+                        <td>User: RAHUL</td>
+                        <td>
+                            <ol>
+                                <li>Enter user in CAPS</li>
+                                <li>Login</li>
+                            </ol>
+                        </td>
+                        <td>Login Successful</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-012 -->
+                    <tr>
+                        <td>TC-012</td>
+                        <td>Wrong SQ Answer</td>
+                        <td>Verify recovery security</td>
+                        <td>Forgot Pwd Page</td>
+                        <td>Wrong Answer</td>
+                        <td>
+                            <ol>
+                                <li>Enter specific wrong answer</li>
+                                <li>Submit</li>
+                            </ol>
+                        </td>
+                        <td>Error: "Incorrect Answer"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Security</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-013 -->
+                    <tr>
+                        <td>TC-013</td>
+                        <td>Direct URL Access</td>
+                        <td>Verify Protected Routes</td>
+                        <td>Logged Out</td>
+                        <td>URL: /app/queue</td>
+                        <td>
+                            <ol>
+                                <li>Paste internal URL</li>
+                                <li>Enter</li>
+                            </ol>
+                        </td>
+                        <td>Redirect to Login Page</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Security</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-014 -->
+                    <tr>
+                        <td>TC-014</td>
+                        <td>Logout Security</td>
+                        <td>Verify session termination</td>
+                        <td>Logged In</td>
+                        <td>Button: Logout</td>
+                        <td>
+                            <ol>
+                                <li>Logout</li>
+                                <li>Press Back Button</li>
+                            </ol>
+                        </td>
+                        <td>Redirects to Login/Home</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Security</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 2. PATIENT PORTAL -->
+        <div class="section">
+            <h2 class="section-title">2. Patient Portal</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-015 -->
+                    <tr>
+                        <td>TC-015</td>
+                        <td>Doctor List Filter</td>
+                        <td>Verify only active doctors are shown</td>
+                        <td>Booking Page</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Load Page</li>
+                                <li>Check Doctor Dropdown</li>
+                            </ol>
+                        </td>
+                        <td>Shows 'Available' or 'On-Break' doctors only</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-016 -->
+                    <tr>
+                        <td>TC-016</td>
+                        <td>Auto-fill Details</td>
+                        <td>Verify pre-filled user data</td>
+                        <td>Booking Page</td>
+                        <td>Logged User</td>
+                        <td>
+                            <ol>
+                                <li>Check Name/Mobile fields</li>
+                            </ol>
+                        </td>
+                        <td>Pre-filled from profile, Read-only</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-017 -->
+                    <tr>
+                        <td>TC-017</td>
+                        <td>Visit Type</td>
+                        <td>Verify visit type selection</td>
+                        <td>Booking Page</td>
+                        <td>"Follow-up"</td>
+                        <td>
+                            <ol>
+                                <li>Select Visit Type</li>
+                            </ol>
+                        </td>
+                        <td>Selection persists in state</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-018 -->
+                    <tr>
+                        <td>TC-018</td>
+                        <td>Symptoms Validation</td>
+                        <td>Verify symptoms are required</td>
+                        <td>Booking Page</td>
+                        <td>Empty Strings</td>
+                        <td>
+                            <ol>
+                                <li>Leave Symptoms empty</li>
+                                <li>Submit</li>
+                            </ol>
+                        </td>
+                        <td>Error Toast: "Please describe symptoms"</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-019 -->
+                    <tr>
+                        <td>TC-019</td>
+                        <td>Live Queue Token</td>
+                        <td>Verify token generation</td>
+                        <td>Queue Page</td>
+                        <td>Active Appointment</td>
+                        <td>
+                            <ol>
+                                <li>Book Appointment</li>
+                                <li>Check Queue UI</li>
+                            </ol>
+                        </td>
+                        <td>Displays correct Token #</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-020 -->
+                    <tr>
+                        <td>TC-020</td>
+                        <td>Real-time Call</td>
+                        <td>Verify 'Now Serving' update</td>
+                        <td>Queue Page</td>
+                        <td>In-Cabin Status</td>
+                        <td>
+                            <ol>
+                                <li>Doctor calls patient</li>
+                                <li>Observe Patient Screen</li>
+                            </ol>
+                        </td>
+                        <td>Status: "IN CABIN (Green)" / "IT'S YOUR TURN"</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Real-time</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-021 -->
+                    <tr>
+                        <td>TC-021</td>
+                        <td>Real-time Skip</td>
+                        <td>Verify queue removal on skip</td>
+                        <td>Queue Page</td>
+                        <td>Absent Status</td>
+                        <td>
+                            <ol>
+                                <li>Staff marks Absent/Skip</li>
+                            </ol>
+                        </td>
+                        <td>Patient removed from active queue view</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Real-time</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-022 -->
+                    <tr>
+                        <td>TC-022</td>
+                        <td>History Order</td>
+                        <td>Verify history sorting order</td>
+                        <td>History Page</td>
+                        <td>Multiple Visits</td>
+                        <td>
+                            <ol>
+                                <li>View History List</li>
+                            </ol>
+                        </td>
+                        <td>Sorted by Date (Newest first)</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-023 -->
+                    <tr>
+                        <td>TC-023</td>
+                        <td>PDF Content</td>
+                        <td>Verify data in valid PDF</td>
+                        <td>History Page</td>
+                        <td>Completed Visit</td>
+                        <td>
+                            <ol>
+                                <li>Download Prescription</li>
+                                <li>Open PDF</li>
+                            </ol>
+                        </td>
+                        <td>Contains Diagnosis, Medicines, Doctor Name</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-024 -->
+                    <tr>
+                        <td>TC-024</td>
+                        <td>PDF Naming</td>
+                        <td>Verify downloaded filename format</td>
+                        <td>History Page</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Check downloaded filename</li>
+                            </ol>
+                        </td>
+                        <td>Format: OmishaClinic_Report_[Name]_[Date].pdf</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 3. DOCTOR PORTAL -->
+        <div class="section">
+            <h2 class="section-title">3. Doctor Portal</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-025 -->
+                    <tr>
+                        <td>TC-025</td>
+                        <td>Go Online</td>
+                        <td>Verify availability toggle On</td>
+                        <td>Doctor Dashboard</td>
+                        <td>Switch: ON</td>
+                        <td>
+                            <ol>
+                                <li>Toggle Availability Switch</li>
+                            </ol>
+                        </td>
+                        <td>Status updates to "Available"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-026 -->
+                    <tr>
+                        <td>TC-026</td>
+                        <td>Go Offline</td>
+                        <td>Verify availability toggle Off</td>
+                        <td>Doctor Dashboard</td>
+                        <td>Switch: OFF</td>
+                        <td>
+                            <ol>
+                                <li>Toggle Switch OFF</li>
+                            </ol>
+                        </td>
+                        <td>Status updates to "Not Available"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-027 -->
+                    <tr>
+                        <td>TC-027</td>
+                        <td>Break Timer</td>
+                        <td>Verify break functionality</td>
+                        <td>Doctor Dashboard</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Click "Take Break"</li>
+                            </ol>
+                        </td>
+                        <td>Timer starts, Status: "On Break"</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-028 -->
+                    <tr>
+                        <td>TC-028</td>
+                        <td>Empty Dashboard</td>
+                        <td>Verify state when no patients</td>
+                        <td>Doctor Dashboard</td>
+                        <td>Empty Queue</td>
+                        <td>
+                            <ol>
+                                <li>Load dashboard with 0 patients</li>
+                            </ol>
+                        </td>
+                        <td>Shows "Cabin Empty" placeholder</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-029 -->
+                    <tr>
+                        <td>TC-029</td>
+                        <td>Patient Context</td>
+                        <td>Verify current patient details</td>
+                        <td>Doctor Dashboard</td>
+                        <td>Active Patient</td>
+                        <td>
+                            <ol>
+                                <li>Call a patient</li>
+                            </ol>
+                        </td>
+                        <td>Display: Name, Age, History</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-030 -->
+                    <tr>
+                        <td>TC-030</td>
+                        <td>Up Next Card</td>
+                        <td>Verify sidebar queue visibility</td>
+                        <td>Doctor Dashboard</td>
+                        <td>Queued items</td>
+                        <td>
+                            <ol>
+                                <li>Check Sidebar</li>
+                            </ol>
+                        </td>
+                        <td>Shows next patient details</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-031 -->
+                    <tr>
+                        <td>TC-031</td>
+                        <td>Call Next</td>
+                        <td>Verify queue progression</td>
+                        <td>Doctor Dashboard</td>
+                        <td>Btn: Call Next</td>
+                        <td>
+                            <ol>
+                                <li>Click "Call Next"</li>
+                            </ol>
+                        </td>
+                        <td>Queue advances, Previous marked completed</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-032 -->
+                    <tr>
+                        <td>TC-032</td>
+                        <td>Add Medicine</td>
+                        <td>Verify medicine entry logic</td>
+                        <td>Prescription Form</td>
+                        <td>Med: Paracetamol</td>
+                        <td>
+                            <ol>
+                                <li>Type Name</li>
+                                <li>Select Dosage</li>
+                                <li>Add</li>
+                            </ol>
+                        </td>
+                        <td>Medicine appears in list</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-033 -->
+                    <tr>
+                        <td>TC-033</td>
+                        <td>Remove Medicine</td>
+                        <td>Verify removing items</td>
+                        <td>Prescription Form</td>
+                        <td>Existing Item</td>
+                        <td>
+                            <ol>
+                                <li>Click Trash Icon</li>
+                            </ol>
+                        </td>
+                        <td>Medicine removed from list</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-034 -->
+                    <tr>
+                        <td>TC-034</td>
+                        <td>Save Prescription</td>
+                        <td>Verify saving and PDF trigger</td>
+                        <td>Prescription Form</td>
+                        <td>Complete Data</td>
+                        <td>
+                            <ol>
+                                <li>Click "Complete & Print"</li>
+                            </ol>
+                        </td>
+                        <td>Saved to DB + PDF generated</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-035 -->
+                    <tr>
+                        <td>TC-035</td>
+                        <td>Consultation Fee</td>
+                        <td>Verify fee settings</td>
+                        <td>Settings Page</td>
+                        <td>Value: 500</td>
+                        <td>
+                            <ol>
+                                <li>Check Fee Input</li>
+                            </ol>
+                        </td>
+                        <td>Fee is visible and editable</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-036 -->
+                    <tr>
+                        <td>TC-036</td>
+                        <td>View Patient History</td>
+                        <td>Verify history access for doctor</td>
+                        <td>Doctor Dashboard</td>
+                        <td>Patient History</td>
+                        <td>
+                            <ol>
+                                <li>Click "History" tab</li>
+                            </ol>
+                        </td>
+                        <td>List of previous visits displayed</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-037 -->
+                    <tr>
+                        <td>TC-037</td>
+                        <td>Update Profile</td>
+                        <td>Verify profile edits</td>
+                        <td>Settings Page</td>
+                        <td>Exp/Qual changes</td>
+                        <td>
+                            <ol>
+                                <li>Edit details</li>
+                                <li>Save</li>
+                            </ol>
+                        </td>
+                        <td>Profile updated successfully</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-038 -->
+                    <tr>
+                        <td>TC-038</td>
+                        <td>Preview Modal</td>
+                        <td>Verify prescription preview</td>
+                        <td>Prescription Form</td>
+                        <td>Filled Form</td>
+                        <td>
+                            <ol>
+                                <li>Click Preview & Finalize</li>
+                            </ol>
+                        </td>
+                        <td>Modal shows Diagnosis + Medicines summary</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-039 -->
+                    <tr>
+                        <td>TC-039</td>
+                        <td>Warning Text</td>
+                        <td>Verify edit warning</td>
+                        <td>Prescription Preview</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Check Modal Content</li>
+                            </ol>
+                        </td>
+                        <td>Alert: "Cannot be Edited Later" visible</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-040 -->
+                    <tr>
+                        <td>TC-040</td>
+                        <td>Save & Complete</td>
+                        <td>Verify final submission</td>
+                        <td>Prescription Preview</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Click Confirm & Save</li>
+                            </ol>
+                        </td>
+                        <td>Success toast → Redirect to dashboard</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 4. STAFF PORTAL -->
+        <div class="section">
+            <h2 class="section-title">4. Staff Portal</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-041 -->
+                    <tr>
+                        <td>TC-041</td>
+                        <td>Walk-in Name Split</td>
+                        <td>Verify name processing</td>
+                        <td>Walk-in Form</td>
+                        <td>"Ajay Kumar"</td>
+                        <td>
+                            <ol>
+                                <li>Enter Full Name</li>
+                            </ol>
+                        </td>
+                        <td>First: Ajay, Last: Kumar (Internal Split)</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-042 -->
+                    <tr>
+                        <td>TC-042</td>
+                        <td>Walk-in Mobile</td>
+                        <td>Verify mobile capture</td>
+                        <td>Walk-in Form</td>
+                        <td>Valid Mobile</td>
+                        <td>
+                            <ol>
+                                <li>Enter Mobile</li>
+                                <li>Submit</li>
+                            </ol>
+                        </td>
+                        <td>Saved to patient profile</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-043 -->
+                    <tr>
+                        <td>TC-043</td>
+                        <td>Mark Payment</td>
+                        <td>Verify payment status toggle</td>
+                        <td>Queue List</td>
+                        <td>Status: Unpaid</td>
+                        <td>
+                            <ol>
+                                <li>Toggle Payment Switch</li>
+                            </ol>
+                        </td>
+                        <td>Status updates to "Paid" (Green)</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-044 -->
+                    <tr>
+                        <td>TC-044</td>
+                        <td>Skip Patient</td>
+                        <td>Verify skip functionality</td>
+                        <td>Queue List</td>
+                        <td>Action: Absent</td>
+                        <td>
+                            <ol>
+                                <li>Click "Absent" icon</li>
+                            </ol>
+                        </td>
+                        <td>Removed from active queue</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-045 -->
+                    <tr>
+                        <td>TC-045</td>
+                        <td>Cancel Token</td>
+                        <td>Verify cancellation</td>
+                        <td>Queue List</td>
+                        <td>Action: Cancel</td>
+                        <td>
+                            <ol>
+                                <li>Click "Cancel" icon</li>
+                            </ol>
+                        </td>
+                        <td>Patient removed from queue</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-046 -->
+                    <tr>
+                        <td>TC-046</td>
+                        <td>Upload Search</td>
+                        <td>Verify patient lookup for uploads</td>
+                        <td>Upload Page</td>
+                        <td>Valid Name</td>
+                        <td>
+                            <ol>
+                                <li>Search by name</li>
+                            </ol>
+                        </td>
+                        <td>Dropdown shows matching patients</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-047 -->
+                    <tr>
+                        <td>TC-047</td>
+                        <td>File Validation</td>
+                        <td>Verify file type checks</td>
+                        <td>Upload Page</td>
+                        <td>File: .exe</td>
+                        <td>
+                            <ol>
+                                <li>Upload invalid file</li>
+                            </ol>
+                        </td>
+                        <td>Error: "Invalid file type"</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Security</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-048 -->
+                    <tr>
+                        <td>TC-048</td>
+                        <td>Upload Report</td>
+                        <td>Verify successful upload</td>
+                        <td>Upload Page</td>
+                        <td>File: Report.pdf</td>
+                        <td>
+                            <ol>
+                                <li>Select PDF</li>
+                                <li>Upload</li>
+                            </ol>
+                        </td>
+                        <td>Success Toast: "Report uploaded"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 5. ADMIN PORTAL -->
+        <div class="section">
+            <h2 class="section-title">5. Admin Portal</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-049 -->
+                    <tr>
+                        <td>TC-049</td>
+                        <td>Role Tabs</td>
+                        <td>Verify role list filtering</td>
+                        <td>Team Mgmt Page</td>
+                        <td>Tabs</td>
+                        <td>
+                            <ol>
+                                <li>Click Doctor Tab</li>
+                                <li>Click Staff Tab</li>
+                            </ol>
+                        </td>
+                        <td>List refreshes correctly for each role</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-050 -->
+                    <tr>
+                        <td>TC-050</td>
+                        <td>Create Doctor</td>
+                        <td>Verify doctor account creation</td>
+                        <td>Team Mgmt Page</td>
+                        <td>Detail + Spec</td>
+                        <td>
+                            <ol>
+                                <li>Fill Form</li>
+                                <li>Save</li>
+                            </ol>
+                        </td>
+                        <td>Success + Credentials Popup</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-051 -->
+                    <tr>
+                        <td>TC-051</td>
+                        <td>Create Staff</td>
+                        <td>Verify staff account creation</td>
+                        <td>Team Mgmt Page</td>
+                        <td>Details</td>
+                        <td>
+                            <ol>
+                                <li>Fill Form</li>
+                                <li>Save</li>
+                            </ol>
+                        </td>
+                        <td>Success + Credentials Popup</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-052 -->
+                    <tr>
+                        <td>TC-052</td>
+                        <td>Duplicate Mobile</td>
+                        <td>Verify unique mobile check</td>
+                        <td>Team Mgmt Page</td>
+                        <td>Existing Mobile</td>
+                        <td>
+                            <ol>
+                                <li>Use used mobile</li>
+                            </ol>
+                        </td>
+                        <td>Error Message displayed</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 6. SETTINGS -->
+        <div class="section">
+            <h2 class="section-title">6. Settings & Account</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-053 -->
+                    <tr>
+                        <td>TC-053</td>
+                        <td>Pwd Visibility</td>
+                        <td>Verify password reveal</td>
+                        <td>Settings Page</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Click Eye Icon</li>
+                            </ol>
+                        </td>
+                        <td>Password Text revealed/hidden</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-054 -->
+                    <tr>
+                        <td>TC-054</td>
+                        <td>Wrong Current Pwd</td>
+                        <td>Verify current password validation</td>
+                        <td>Settings Page</td>
+                        <td>Wrong Pwd</td>
+                        <td>
+                            <ol>
+                                <li>Enter wrong current pwd</li>
+                            </ol>
+                        </td>
+                        <td>Error: "Incorrect current password"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Security</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-055 -->
+                    <tr>
+                        <td>TC-055</td>
+                        <td>Mismatch New Pwd</td>
+                        <td>Verify new password confirmation</td>
+                        <td>Settings Page</td>
+                        <td>Diff New/Confirm</td>
+                        <td>
+                            <ol>
+                                <li>Enter different new/confirm</li>
+                            </ol>
+                        </td>
+                        <td>Error: "Passwords do not match"</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>Functional</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-056 -->
+                    <tr>
+                        <td>TC-056</td>
+                        <td>Success Pwd Update</td>
+                        <td>Verify successful password change</td>
+                        <td>Settings Page</td>
+                        <td>Valid Inputs</td>
+                        <td>
+                            <ol>
+                                <li>Fill valid details</li>
+                                <li>Save</li>
+                            </ol>
+                        </td>
+                        <td>Success toast displayed</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Security</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 7. PUBLIC DISPLAY (TV) -->
+        <div class="section">
+            <h2 class="section-title">7. Public Display (TV)</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-057 -->
+                    <tr>
+                        <td>TC-057</td>
+                        <td>Initial Load</td>
+                        <td>Verify TV grid rendering</td>
+                        <td>TV URL</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Open /tv</li>
+                            </ol>
+                        </td>
+                        <td>Grid of doctors displayed with data</td>
+                        <td><span class="badge high">High</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-058 -->
+                    <tr>
+                        <td>TC-058</td>
+                        <td>Live Sync</td>
+                        <td>Verify socket updates</td>
+                        <td>TV Page</td>
+                        <td>Queue Change</td>
+                        <td>
+                            <ol>
+                                <li>Trigger queue update</li>
+                                <li>Observe TV</li>
+                            </ol>
+                        </td>
+                        <td>Screen updates instantly</td>
+                        <td><span class="badge critical">Critical</span></td>
+                        <td>Real-time</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- 8. RESPONSIVENESS & UI -->
+        <div class="section">
+            <h2 class="section-title">8. Responsiveness & UI</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th class="col-id">Test ID</th>
+                        <th class="col-title">Title</th>
+                        <th class="col-obj">Objective</th>
+                        <th class="col-pre">Precondition</th>
+                        <th class="col-data">Test Data</th>
+                        <th class="col-steps">Steps</th>
+                        <th class="col-result">Expected Result</th>
+                        <th class="col-prio">Priority</th>
+                        <th class="col-type">Type</th>
+                        <th class="col-status">Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- TC-059 -->
+                    <tr>
+                        <td>TC-059</td>
+                        <td>Mobile Sidebar</td>
+                        <td>Verify mobile layout</td>
+                        <td>Viewport < 1024px</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Resize width</li>
+                            </ol>
+                        </td>
+                        <td>Sidebar hides, Menu button appears</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-060 -->
+                    <tr>
+                        <td>TC-060</td>
+                        <td>Tablet Grid</td>
+                        <td>Verify responsiveness</td>
+                        <td>Viewport Tablet</td>
+                        <td>N/A</td>
+                        <td>
+                            <ol>
+                                <li>Resize to tablet</li>
+                            </ol>
+                        </td>
+                        <td>Grid adjusts columns (md:grid-cols-2)</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                    <!-- TC-061 -->
+                    <tr>
+                        <td>TC-061</td>
+                        <td>404 Page</td>
+                        <td>Verify invalid route handling</td>
+                        <td>Any Page</td>
+                        <td>Bad URL</td>
+                        <td>
+                            <ol>
+                                <li>Enter random URL</li>
+                            </ol>
+                        </td>
+                        <td>Custom "Page Not Found" displayed</td>
+                        <td><span class="badge medium">Medium</span></td>
+                        <td>UI</td>
+                        <td><span class="badge pass">Pass</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+
+</html>
